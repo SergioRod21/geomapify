@@ -7,6 +7,7 @@ async function getIpData(ip) {
   try {
     const data = await getIpInformation(ip);
     console.log(data);
+    return data;
   } catch (error) {
     console.error(error);
     return null;
@@ -14,30 +15,55 @@ async function getIpData(ip) {
 }
 
 function IpInformation() {
-  const [waitingText, setWaitingText] = useState("Waiting for user input.");
-  const [Ip, setIp] = useState("");
+  const [ip, setIp] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    setIp(getUserIp());
-    getIpData(Ip);
+    async function fetchData() {
+      const userIp = await getUserIp();
+      setIp(userIp);
+    }
+    fetchData();
   }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setWaitingText((prevText) => {
-        return prevText.length < 25 ? prevText + "." : waitingText;
-      });
-    }, 3000);
+    async function fetchData() {
+      if (ip) {
+        const data = await getIpData(ip);
+        setData(data);
+      }
+    }
+    fetchData();
+  }, [ip]);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  console.log("data ", data);
+
+  if (!data) return null;
 
   return (
     <>
-      <h1 className="self-start text-white font-bold text-lg ml-4">
-        {waitingText}
-      </h1>
-      <div className=""></div>
+      <div className="relative overflow-hidden rounded-xl w-10/12">
+        <table className="table-fixed w-full text-left">
+          <tbody className="bg-[#0A2647] text-[#ffffff]">
+            <tr className="py-5">
+              <td className="py-5  border-r text-center p-4">IP</td>
+              <td className="py-5  text-center p-4">{data.ip}</td>
+            </tr>
+            <tr className="py-5">
+              <td className="py-5  border-r text-center p-4">
+                Proveedor de Internet
+              </td>
+              <td className="py-5  text-center p-4">{data.isp}</td>
+            </tr>
+            <tr className="py-5">
+              <td className="py-5  border-r text-center p-4">Local Time</td>
+              <td className="py-5  text-center p-4">
+                {data.time_zone.current_time.slice(10, -12)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

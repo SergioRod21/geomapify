@@ -14,29 +14,17 @@ async function getIpData(ip) {
   }
 }
 
-function IpInformation() {
-  const [ip, setIp] = useState(null);
+function IpInformation({ ipValue }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       const userIp = await getUserIp();
-      setIp(userIp);
+      const data = await getIpData(ipValue !== "" ? ipValue : userIp);
+      setData(data);
     }
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      if (ip) {
-        const data = await getIpData(ip);
-        setData(data);
-      }
-    }
-    fetchData();
-  }, [ip]);
-
-  console.log("data ", data);
+  }, [ipValue]);
 
   if (!data) return null;
 
@@ -46,18 +34,20 @@ function IpInformation() {
         <table className="table-fixed w-full text-left">
           <tbody className="bg-[#0A2647] text-[#ffffff]">
             <tr className="py-5">
-              <td className="py-5  border-r text-center p-4">IP</td>
-              <td className="py-5  text-center p-4">{data.ip}</td>
+              <td className="py-5  border-r text-center p-4 font-medium">IP</td>
+              <td className="py-5  text-center p-4 font-medium">{data.ip}</td>
             </tr>
             <tr className="py-5">
-              <td className="py-5  border-r text-center p-4">
-                Proveedor de Internet
+              <td className="py-5  border-r text-center p-4 font-medium">
+                ISP
               </td>
-              <td className="py-5  text-center p-4">{data.isp}</td>
+              <td className="py-5  text-center p-4 font-medium">{data.isp}</td>
             </tr>
             <tr className="py-5">
-              <td className="py-5  border-r text-center p-4">Local Time</td>
-              <td className="py-5  text-center p-4">
+              <td className="py-5  border-r text-center p-4 font-medium">
+                Local Time
+              </td>
+              <td className="py-5  text-center p-4 font-medium">
                 {data.time_zone.current_time.slice(10, -12)}
               </td>
             </tr>

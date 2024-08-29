@@ -3,16 +3,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function Search() {
-  const [search, setSearch] = React.useState("8.8.8.8");
-
+function Search({ setIp }) {
   function onClick() {
-    console.log("Button clicked");
+    setIp(document.getElementById("search").value);
   }
 
   return (
     <div className="w-3/4 flex justify-center relative mt-6 mb-4">
       <input
+        id="search"
         type="text"
         placeholder="8.8.8.8"
         className="w-full rounded-xl p-2 pr-12"

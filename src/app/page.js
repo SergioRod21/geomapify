@@ -15,13 +15,17 @@ export default function Home() {
   const [ip, setIp] = React.useState("");
 
   return (
-    <div className="bg-[--secondary] w-full h-full">
+    <>
       <Header />
-      <div className="flex flex-col items-center">
-        <Search setIp={setIp} />
-        <Map ip={ip} />
-        <IpInformation ipValue={ip} />
+      <div className="bg-[--secondary] w-full h-full flex flex-col items-center gap-8 lg:flex-row lg:justify-center">
+        <div className="w-full flex justify-center flex-col items-center">
+          <Search setIp={setIp} />
+          <IpInformation ipValue={ip} />
+        </div>
+        <div className="w-full flex justify-center items-center">
+          <Map ip={ip} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

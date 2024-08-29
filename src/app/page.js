@@ -18,11 +18,11 @@ export default function Home() {
     <>
       <Header />
       <div className="bg-[--secondary] w-full h-full flex flex-col items-center gap-8 lg:flex-row lg:justify-center">
-        <div className="w-full flex justify-center flex-col items-center">
+        <div className="w-full lg:h-full flex justify-center flex-col items-center lg:gap-10 lg:justify-start lg:py-20">
           <Search setIp={setIp} />
           <IpInformation ipValue={ip} />
         </div>
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full lg:h-full flex justify-center items-center">
           <Map ip={ip} />
         </div>
       </div>

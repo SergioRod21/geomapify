@@ -31,7 +31,7 @@ function Map({ ip }) {
   if (!data) return null;
 
   return (
-    <div className="w-11/12 h-96 mb-16">
+    <div className="w-11/12 h-96 mb-16 lg:h-5/6 lg:py-12">
       <p className="bg-[--primary] px-4 py-2 rounded-t-lg pl-2 font-semibold text-white">
         {data.city}, {data.state_prov}, {data.country_name} {data.country_emoji}
       </p>
